@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>منصة أحمد شوقي | Physics Academy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Cairo',sans-serif;
+    }
+
+    body{
+      background:#0d1117;
+      color:white;
+      overflow-x:hidden;
+    }
+
+    a{
+      text-decoration:none;
+      color:white;
+    }
+
+    .navbar{
+      width:100%;
+      padding:20px 8%;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      position:fixed;
+      top:0;
+      z-index:1000;
+      background:rgba(0,0,0,0.4);
+      backdrop-filter:blur(10px);
+    }
+
+    .logo{
+      font-size:32px;
+      font-weight:800;
+      color:#00d4ff;
+    }
+
+    .nav-links{
+      display:flex;
+      gap:30px;
+      list-style:none;
+    }
+
+    .nav-links a{
+      transition:0.3s;
+      font-weight:600;
+    }
+
+    .nav-links a:hover{
+      color:#00d4ff;
+    }
+
+    .hero{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:120px 8% 60px;
+      background:linear-gradient(135deg,#020617,#0f172a,#111827);
+      position:relative;
+    }
+
+    .hero::before{
+      content:'';
+      position:absolute;
+      width:500px;
+      height:500px;
+      background:#00d4ff22;
+      border-radius:50%;
+      top:-150px;
+      left:-100px;
+      filter:blur(80px);
+    }
+
+    .hero-text{
+      width:50%;
+      z-index:2;
+    }
+
+    .hero-text h1{
+      font-size:70px;
+      line-height:1.2;
+      margin-bottom:20px;
+    }
+
+    .hero-text h1 span{
+      color:#00d4ff;
+    }
+
+    .hero-text p{
+      font-size:20px;
+      color:#cbd5e1;
+      margin-bottom:35px;
+      line-height:2;
+    }
+
+    .buttons{
+      display:flex;
+      gap:20px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      padding:15px 35px;
+      border-radius:14px;
+      font-size:18px;
+      font-weight:700;
+      transition:0.3s;
+    }
+
+    .primary{
+      background:#00d4ff;
+      color:#000;
+    }
+
+    .primary:hover{
+      transform:translateY(-5px);
+      box-shadow:0 10px 25px #00d4ff55;
+    }
+
+    .secondary{
+      border:2px solid #00d4ff;
+    }
+
+    .secondary:hover{
+      background:#00d4ff;
+      color:black;
+    }
+
+    .hero-image{
+      width:40%;
+      display:flex;
+      justify-content:center;
+      z-index:2;
+    }
+
+    .teacher-card{
+      width:360px;
+      background:rgba(255,255,255,0.06);
+      border:1px solid rgba(255,255,255,0.1);
+      border-radius:30px;
+      padding:30px;
+      text-align:center;
+      backdrop-filter:blur(15px);
+      box-shadow:0 15px 40px rgba(0,0,0,0.4);
+    }
+
+    .teacher-card img{
+      width:180px;
+      height:180px;
+      border-radius:50%;
+      object-fit:cover;
+      border:5px solid #00d4ff;
+      margin-bottom:20px;
+    }
+
+    .teacher-card h2{
+      font-size:34px;
+      margin-bottom:10px;
+    }
+
+    .teacher-card p{
+      color:#cbd5e1;
+      line-height:1.8;
+    }
+
+    .features{
+      padding:100px 8%;
+      background:#111827;
+    }
+
+    .section-title{
+      text-align:center;
+      font-size:48px;
+      margin-bottom:60px;
+    }
+
+    .section-title span{
+      color:#00d4ff;
+    }
+
+    .feature-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      gap:30px;
+    }
+
+    .feature-box{
+      background:#1e293b;
+      padding:35px;
+      border-radius:24px;
+      transition:0.4s;
+      border:1px solid transparent;
+    }
+
+    .feature-box:hover{
+      transform:translateY(-10px);
+      border-color:#00d4ff;
+    }
+
+    .feature-box h3{
+      font-size:26px;
+      margin-bottom:15px;
+      color:#00d4ff;
+    }
+
+    .feature-box p{
+      line-height:2;
+      color:#cbd5e1;
+    }
+
+    .courses{
+      padding:100px 8%;
+      background:#0f172a;
+    }
+
+    .course-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+      gap:30px;
+    }
+
+    .course-card{
+      background:#1e293b;
+      border-radius:25px;
+      overflow:hidden;
+      transition:0.4s;
+    }
+
+    .course-card:hover{
+      transform:scale(1.03);
+    }
+
+    .course-image{
+      height:200px;
+      background:linear-gradient(135deg,#00d4ff,#2563eb);
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      font-size:60px;
+    }
+
+    .course-content{
+      padding:30px;
+    }
+
+    .course-content h3{
+      font-size:28px;
+      margin-bottom:15px;
+    }
+
+    .course-content p{
+      color:#cbd5e1;
+      line-height:2;
+      margin-bottom:20px;
+    }
+
+    .price{
+      font-size:24px;
+      font-weight:800;
+      color:#00d4ff;
+      margin-bottom:20px;
+    }
+
+    .footer{
+      background:#020617;
+      text-align:center;
+      padding:35px;
+      color:#94a3b8;
+      border-top:1px solid rgba(255,255,255,0.1);
+    }
+
+    @media(max-width:950px){
+      .hero{
+        flex-direction:column;
+        text-align:center;
+        gap:50px;
+      }
+
+      .hero-text,
+      .hero-image{
+        width:100%;
+      }
+
+      .hero-text h1{
+        font-size:48px;
+      }
+
+      .buttons{
+        justify-content:center;
+      }
+
+      .nav-links{
+        display:none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="logo">Ahmed Shawky</div>
+
+    <ul class="nav-links">
+      <li><a href="#home">الرئيسية</a></li>
+      <li><a href="#features">المميزات</a></li>
+      <li><a href="#courses">الكورسات</a></li>
+      <li><a href="#contact">تواصل معنا</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero" id="home">
+    <div class="hero-text">
+      <h1>
+        اتعلم الفيزياء مع
+        <span>أحمد شوقي</span>
+      </h1>
+
+      <p>
+        منصة تعليمية متكاملة لشرح مادة الفيزياء بطريقة سهلة وعصرية للثانوية العامة،
+        تشمل فيديوهات شرح، امتحانات، واجبات، مراجعات نهائية، وبنوك أسئلة.
+      </p>
+
+      <div class="buttons">
+        <a href="#courses" class="btn primary">ابدأ الآن</a>
+        <a href="#features" class="btn secondary">اعرف أكثر</a>
+      </div>
+    </div>
+
+    <div class="hero-image">
+      <div class="teacher-card">
+        <img src="c:\Users\youse\AppData\Local\Packages\5319275A.WhatsAppDesktop_cv1g1gvanyjgm\LocalState\sessions\3BE12DE4AB92F48212AFE92F53002D1008221945\transfers\2026-19\WhatsApp Image 2026-05-07 at 10.22.46 PM.jpeg" alt="Ahmed Shawky">
+
+        <h2>أ/ أحمد شوقي</h2>
+
+        <p>
+          مدرس الفيزياء للثانوية العامة بخبرة كبيرة في تبسيط القوانين والمسائل
+          بطريقة سهلة تساعد الطلاب على التفوق.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="features" id="features">
+    <h2 class="section-title">
+      ليه تختار <span>المنصة ؟</span>
+    </h2>
+
+    <div class="feature-grid">
+      <div class="feature-box">
+        <h3>شرح مبسط</h3>
+        <p>
+          شرح الفيزياء بطريقة سهلة مع تبسيط القوانين والمسائل الصعبة خطوة بخطوة.
+        </p>
+      </div>
+
+      <div class="feature-box">
+        <h3>امتحانات إلكترونية</h3>
+        <p>
+          اختبارات بعد كل درس مع تصحيح تلقائي لمعرفة مستواك الحقيقي.
+        </p>
+      </div>
+
+      <div class="feature-box">
+        <h3>مراجعات نهائية</h3>
+        <p>
+          مراجعات شاملة قبل الامتحانات تحتوي على أهم الأفكار والأسئلة المتوقعة.
+        </p>
+        <p>الفصل الخامس 
+        <a href="https://www.youtube.com/watch?v=R6755ve0H7o"target="blank"> الفصل الخامس 1</a>
+        <a href="https://www.youtube.com/watch?v=k7qQabM2mik&t=7s"target="blank"> الفصل الخامس 2 </a>
+      </p>
+
+<p>  الفصل الرابع <a href="https://www.youtube.com/watch?v=T8Ubwp4YsI0"target="blank"> الفصل الرابع 1</a>
+
+<a href="https://www.youtube.com/watch?v=PvyBL0gs3pA"target="blank"> الفصل الرابع 2</a>
+
+<a href="https://www.youtube.com/watch?v=i9Sq5bnG-og"target="blank"> الفصل الرابع 3</a>
+  </p>
+  <p> الفصل الثالث 
+    <a href="https://www.youtube.com/watch?v=iO7tP6EbI7s&pp=0gcJCQMLAYcqIYzv"target="blank"> الفصل الثالث 1</a>
+    <a href="https://www.youtube.com/watch?v=IvHPAi8bkYA"target="blank"> الفصل الثالث 2 </a>
+    <a href="https://www.youtube.com/watch?v=HL6D3Wvu_mw&t=23s"target="blank"> الفصل الثالث 3</a>
+    <a href="https://www.youtube.com/watch?v=Yrbp-cmzAso"target="blank"> الفصل الثالث 4</a>
+  </p>
+  
+      </div>
+
+      <div class="feature-box">
+        <h3>متابعة مستمرة</h3>
+        <p>
+          متابعة مع الطلاب وحل الواجبات والأسئلة أول بأول داخل المنصة من هذا الرقم 
+          01003101984
+        </p>
+      </div>
+    </div>
+  </section>
+
+  
+
+  <footer class="footer" id="contact">
+    <h3>منصة أحمد شوقي للفيزياء</h3>
+    <br>
+    <p>
+      جميع الحقوق محفوظة © 2026
+    </p>
+  </footer>
+
+</body>
+</html>
