@@ -272,7 +272,7 @@
         .hero {
             width: 100%;
             height: 420px;
-            background: linear-gradient(135deg, #ffffff, #9f76a9, #58274f);
+            background: linear-gradient(135deg,  #e74dff, #db8cc7);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -280,6 +280,47 @@
         }
         .hero h1 { font-size: 48px; margin-bottom: 20px; color: #ffffff; }
         .hero p { font-size: 22px; color: #ffffff; }
+
+        /* ===== أقسام المنتجات (4 أقسام) ===== */
+        .categories-section {
+            max-width: 1400px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        .categories-section h2 {
+            color: #d63384;
+            font-size: 32px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+        .category-card {
+            background: #ffe4ec;
+            border-radius: 18px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: .3s;
+            box-shadow: 0 6px 18px rgba(255, 107, 157, 0.3);
+            text-align: center;
+        }
+        .category-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(255, 107, 157, 0.4);
+        }
+        .category-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        .category-card h3 {
+            color: #d63384;
+            padding: 15px;
+            font-size: 20px;
+        }
 
         #productsContainer {
             max-width: 1400px;
@@ -290,11 +331,11 @@
             gap: 25px;
         }
         .product-card {
-            background: #d4bcda;
+            background: #ffe4ec;
             border-radius: 18px;
             overflow: hidden;
             transition: .3s;
-            box-shadow: 0 6px 18px rgba(234, 167, 201, 0.3);
+            box-shadow: 0 6px 18px rgba(255, 107, 157, 0.3);
         }
         .product-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(255, 107, 157, 0.4); }
         .product-card img {
@@ -340,6 +381,21 @@
         }
         .size-btn:hover { background: #ffe4ec; }
         .size-btn.selected { background: #d63384; color: #ffffff; border-color: #d63384; }
+
+        .back-btn {
+            display: inline-block;
+            margin: 20px 40px;
+            padding: 12px 30px;
+            background: #d63384;
+            color: #fff;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: .3s;
+        }
+        .back-btn:hover { background: #c72e7a; transform: scale(1.05); }
 
         .notification {
             position: fixed;
@@ -389,7 +445,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 20px;
-            border-bottom: 1px solid #8b5972;
+            border-bottom: 1px solid #d63384;
         }
         .cart-header h2 { font-size: 22px; color: #d63384; }
         .cart-header button { border: none; background: none; font-size: 26px; cursor: pointer; color: #d63384; }
@@ -579,6 +635,7 @@
             .hero { height: 280px; padding: 20px; }
             .hero h1 { font-size: 32px; }
             .hero p { font-size: 18px; }
+            .categories-grid { grid-template-columns: repeat(2, 1fr); }
             #productsContainer { padding: 20px; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
             .cart-sidebar { width: 100%; left: -100%; }
             footer div { flex-direction: column; align-items: center; }
@@ -666,7 +723,7 @@
             <div class="reset-manual-box">
                 <h3>🔧 تغيير كلمة المرور يدوياً</h3>
                 <p style="color:#888; font-size:13px; text-align:center; margin-bottom:12px;">
-                    📧 سيتم إرسال كلمة المرور الجديدة إلى بريدك من <strong style="color:#ffa726;">jojocharmstore@gmail.com</strong>
+                    📧 سيتم إرسال كلمة المرور الجديدة إلى بريدك من <strong style="color:#ffa726;">jojocharm10@gmail.com</strong>
                 </p>
                 <input type="email" id="manualEmail" placeholder="✉️ البريد الإلكتروني">
                 <input type="password" id="manualOldPassword" placeholder="🔑 كلمة المرور الحالية">
@@ -705,14 +762,46 @@
         </header>
 
         <section class="hero">
-            
             <div class="hero-text">
-                <h1> أهلاً بك في JoJo Charm</h1>
+                <h1>أهلاً بك في JoJo Charm</h1>
                 <p>أفضل العروض والمنتجات بأفضل الأسعار.</p>
             </div>
         </section>
 
-        <main id="productsContainer"></main>
+        <!-- ===== أقسام المنتجات (4 أقسام) ===== -->
+        <section class="categories-section" id="categoriesSection">
+        
+            <div class="categories-grid" id="categoriesGrid">
+                <!-- القسم 1 -->
+                <div class="category-card" onclick="filterByCategory('ملابس')">
+                    <img src="https://images.unsplash.com/photo-1562157873-818bc0726f68?w=400" alt="ملابس">
+                    <h3>Handmade BeautyCare</h3>
+                </div>
+                <!-- القسم 2 -->
+                <div class="category-card" onclick="filterByCategory('إكسسوارات')">
+                    <img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=400" alt="إكسسوارات">
+                    <h3>💍 Accessories Hand made & Stainless Steel</h3>
+                </div>
+                <!-- القسم 3 -->
+                <div class="category-card" onclick="filterByCategory('أحذية')">
+                    <img src="https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400" alt="أحذية">
+                    <h3>🎀 Hair Accessories</h3>
+                </div>
+                <!-- القسم 4 -->
+                <div class="category-card" onclick="filterByCategory('عطور')">
+                    <img src="https://images.unsplash.com/photo-1594035910387-fea47794261f?w=400" alt="عطور">
+                    <h3>💄 Makeup </h3>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== حاوية المنتجات ===== -->
+        <div id="productsContainer"></div>
+
+        <!-- ===== زر الرجوع ===== -->
+        <div style="text-align: center; display: none;" id="backButtonContainer">
+            <button class="back-btn" onclick="showAllProducts()">🏠 العودة للرئيسية</button>
+        </div>
 
         <aside class="cart-sidebar" id="cartSidebar">
             <div class="cart-header">
@@ -782,21 +871,25 @@
             </div>
         </div>
 
-        <footer>
-            <p>© 2026 JoJo Charm. جميع الحقوق محفوظة</p>
-            <div>
-                <a href="#" onclick="showPrivacyPolicy(event)">🌐 سياسة الخصوصية</a>
-                <a href="mailto:jojocharm10@gmail.com">
-                    <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="إيميل" width="20" height="20"> البريد الإلكتروني
-                </a>
-                <a href="https://www.facebook.com/share/1c6otjvVbP/" target="_blank">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="فيسبوك" width="20" height="20"> فيسبوك
-                </a>
-                <a href="https://wa.me/201108776432" target="_blank">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="واتساب" width="20" height="20"> واتساب
-                </a>
-            </div>
-        </footer>
+      <!-- ===== روابط التواصل الاجتماعي في الفوتر ===== -->
+<footer>
+    <p>© 2026 JoJo Charm. جميع الحقوق محفوظة</p>
+    <div>
+        <a href="#" onclick="showPrivacyPolicy(event)">🌐 سياسة الخصوصية</a>
+        <a href="mailto:jojocharm10@gmail.com">
+            <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="إيميل" width="20" height="20"> البريد الإلكتروني
+        </a>
+        <a href="https://www.facebook.com/share/1EkWv3TqJG/" target="_blank">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="فيسبوك" width="20" height="20"> فيسبوك
+        </a>
+        <a href="https://www.instagram.com/jojocharm10" target="_blank">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="انستجرام" width="20" height="20"> انستجرام
+        </a>
+        <a href="https://wa.me/201110580579" target="_blank">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="واتساب" width="20" height="20"> واتساب
+        </a>
+    </div>
+</footer>
     </div>
 
     <script type="module">
@@ -812,7 +905,8 @@
             updatePassword
         } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
 
-     
+    
+
         // ===== المتغيرات =====
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
         let autoRotateIntervals = {};
@@ -820,11 +914,13 @@
         let dragStartX = 0;
         let currentImageIndex = {};
         let selectedSizes = {};
+        let currentCategory = 'الكل';
+        let allProducts = [];
 
         // ===== المنتجات =====
-        const allProducts = [{
+        const productsData = [{
             id: 1,
-            name: "شورت رجالي",
+            name: "شورت رجالي صيفي",
             price: 1,
             oldPrice: 16,
             discount: "27%",
@@ -873,6 +969,60 @@
             category: "ملابس",
             sizes: ["S", "M", "L", "XL", "2XL", "3XL", "4XL"],
             image: "https://j.top4top.io/p_3832lszls1.jpg"
+        }, {
+            id: 4,
+            name: "ساعة أنيقة",
+            price: 500,
+            oldPrice: 750,
+            discount: "33%",
+            category: "إكسسوارات",
+            sizes: ["واحدة"],
+            image: "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?w=400"
+        }, {
+            id: 5,
+            name: "سلسلة ذهبية",
+            price: 650,
+            oldPrice: 900,
+            discount: "28%",
+            category: "إكسسوارات",
+            sizes: ["واحدة"],
+            image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=400"
+        }, {
+            id: 6,
+            name: "حذاء رياضي",
+            price: 850,
+            oldPrice: 1200,
+            discount: "29%",
+            category: "أحذية",
+            sizes: ["38", "39", "40", "41", "42", "43"],
+            image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400"
+        }, {
+            id: 7,
+            name: "حذاء رسمي",
+            price: 950,
+            oldPrice: 1350,
+            discount: "30%",
+            category: "أحذية",
+            sizes: ["38", "39", "40", "41", "42", "43"],
+            image: "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?w=400"
+        }, {
+            id: 8,
+            name: "عطر فرنسي",
+            price: 450,
+            oldPrice: 650,
+            discount: "31%",
+            category: "عطور",
+            sizes: ["50ml", "100ml"],
+            image: "https://images.unsplash.com/photo-1594035910387-fea47794261f?w=400"
+        }, {
+            id: 9,
+            name: "عطر خشبي",
+            price: 550,
+            oldPrice: 800,
+            discount: "31%",
+            category: "عطور",
+            sizes: ["50ml", "100ml"],
+            image: "https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=400"
         }];
 
         // ============================================================
@@ -1092,14 +1242,13 @@
                 const user = userCredential.user;
                 await updatePassword(user, newPassword);
                 
-                // إرسال إيميل للمستخدم من المتجر
                 const message = `تم تغيير كلمة المرور الخاصة بحسابك في متجر JoJo Charm بنجاح.\n\nكلمة المرور الجديدة: ${newPassword}\n\nيرجى حفظها في مكان آمن.`;
                 await sendEmail(email, "عميل JoJo", message, "✅ تم تغيير كلمة المرور");
 
                 resultDiv.className = 'reset-result success';
                 resultDiv.innerHTML = `
                     ✅ تم تغيير كلمة المرور بنجاح!<br>
-                    📧 تم إرسال كلمة المرور الجديدة إلى بريدك من <strong style="color:#ffa726;">jojocharmstore@gmail.com</strong>
+                    📧 تم إرسال كلمة المرور الجديدة إلى بريدك من <strong style="color:#ffa726;">jojocharm10@gmail.com</strong>
                 `;
                 
                 showNotification('✅ تم تغيير كلمة المرور بنجاح!');
@@ -1159,7 +1308,10 @@
                 if (userEmailDisplay) {
                     userEmailDisplay.textContent = user.email;
                 }
-                displayProducts(allProducts);
+                allProducts = [...productsData];
+                displayProducts([]);
+                document.getElementById('categoriesSection').style.display = 'block';
+                document.getElementById('backButtonContainer').style.display = 'none';
                 updateCartIconCount();
                 showNotification('✨ مرحباً بك في JoJo Charm!');
             } else {
@@ -1318,6 +1470,28 @@
             locationInput.focus();
         };
 
+        // ===== دوال المنتجات =====
+        window.filterByCategory = function(category) {
+            currentCategory = category;
+            const filtered = productsData.filter(p => p.category === category);
+            displayProducts(filtered);
+            document.getElementById('categoriesSection').style.display = 'none';
+            document.getElementById('backButtonContainer').style.display = 'block';
+            // إخفاء زر العودة إذا كان البحث لا يظهر نتائج
+            if (filtered.length === 0) {
+                document.getElementById('backButtonContainer').style.display = 'none';
+            }
+        };
+
+        window.showAllProducts = function() {
+            currentCategory = 'الكل';
+            displayProducts([]);
+            document.getElementById('categoriesSection').style.display = 'block';
+            document.getElementById('backButtonContainer').style.display = 'none';
+            // إعادة تعيين البحث
+            document.getElementById('searchInput').value = '';
+        };
+
         // ===== إرسال الطلب =====
         window.sendOrderToWhatsApp = function() {
             const name = document.getElementById('clientName').value.trim();
@@ -1356,15 +1530,12 @@
             message += `📧 هذا البريد مرسل من متجر JoJo Charm\n`;
             message += `📧 jojocharm10@gmail.com`;
 
-            // ✅ فتح البريد الإلكتروني (mailto) مع الإيميل الثابت
             const subject = encodeURIComponent("✅ تأكيد طلبك من متجر JoJo Charm");
             const body = encodeURIComponent(message);
             window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
 
-            // ✅ فتح واتساب للمتجر
             window.open(`https://wa.me/201108776432?text=${encodeURIComponent(`🛍️ طلب جديد من ${name}\n📱 ${phone}\n📍 ${location}\n💰 ${total}ج.م`)}`, '_blank');
 
-            // تفريغ العربة
             setTimeout(() => {
                 cart = [];
                 localStorage.setItem("cart", JSON.stringify(cart));
@@ -1383,8 +1554,7 @@
             if (productsToDisplay.length === 0) {
                 container.innerHTML = `
                     <div style="grid-column:1/-1; text-align:center; padding:60px 20px; color:#888;">
-                        <h2 style="font-size:28px; margin-bottom:10px;">🔍 لا توجد منتجات</h2>
-                        <p>حاول تغيير كلمة البحث أو التصنيف</p>
+                        
                     </div>
                 `;
                 return;
@@ -1461,7 +1631,7 @@
                     if (btn.textContent.trim() === size) btn.classList.add('selected');
                 });
             }
-            const product = allProducts.find(p => p.id === productId);
+            const product = productsData.find(p => p.id === productId);
             if (product) showNotification(`✅ تم اختيار المقاس ${size} لمنتج "${product.name}"`);
         };
 
@@ -1474,7 +1644,7 @@
             stopAutoRotate(id); };
         window.dragRotate = function(e, id) {
             if (!isDragging) return;
-            const product = allProducts.find(p => p.id === id);
+            const product = productsData.find(p => p.id === id);
             if (!product || !product.images360) return;
             const deltaX = e.clientX - dragStartX;
             if (Math.abs(deltaX) > 10) {
@@ -1490,7 +1660,7 @@
         window.dragRotateTouch = function(e, id) {
             if (!isDragging) return;
             const touch = e.touches[0];
-            const product = allProducts.find(p => p.id === id);
+            const product = productsData.find(p => p.id === id);
             if (!product || !product.images360) return;
             const deltaX = touch.clientX - dragStartX;
             if (Math.abs(deltaX) > 10) {
@@ -1506,7 +1676,7 @@
         window.endDrag = function() { isDragging = false; };
 
         function startAutoRotate(id) {
-            const product = allProducts.find(p => p.id === id);
+            const product = productsData.find(p => p.id === id);
             if (!product || !product.images360) return;
             const img = document.getElementById(`img-${id}`);
             if (!img) return;
@@ -1524,8 +1694,22 @@
 
         window.searchProducts = function() {
             const searchInput = document.getElementById('searchInput').value.trim().toLowerCase();
-            const filtered = allProducts.filter(p => p.name.toLowerCase().includes(searchInput));
+            if (!searchInput) {
+                // إذا كان البحث فارغاً، نظهر الأقسام
+                document.getElementById('categoriesSection').style.display = 'block';
+                document.getElementById('backButtonContainer').style.display = 'none';
+                displayProducts([]);
+                return;
+            }
+            
+            let filtered = productsData.filter(p => p.name.toLowerCase().includes(searchInput));
             displayProducts(filtered);
+            document.getElementById('categoriesSection').style.display = 'none';
+            if (filtered.length > 0) {
+                document.getElementById('backButtonContainer').style.display = 'block';
+            } else {
+                document.getElementById('backButtonContainer').style.display = 'none';
+            }
         };
 
         window.toggleCart = function() {
@@ -1538,7 +1722,7 @@
         };
 
         window.addToCart = function(id) {
-            const product = allProducts.find(p => p.id === id);
+            const product = productsData.find(p => p.id === id);
             if (!product) return;
             const selectedSize = selectedSizes[id];
             if (product.sizes && product.sizes.length > 0 && !selectedSize) {
@@ -1664,7 +1848,7 @@
         window.showNotification = showNotification;
         window.startAutoRotate = startAutoRotate;
         window.stopAutoRotate = stopAutoRotate;
-        window.allProducts = allProducts;
+        window.allProducts = productsData;
         window.cart = cart;
         window.selectedSizes = selectedSizes;
         window.currentImageIndex = currentImageIndex;
