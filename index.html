@@ -8,23 +8,23 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    
+
     <!-- EmailJS -->
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
     </script>
-    
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
-        import { 
-            getAuth, 
-            signInWithEmailAndPassword, 
-            onAuthStateChanged, 
-            signOut, 
+        import {
+            getAuth,
+            signInWithEmailAndPassword,
+            onAuthStateChanged,
+            signOut,
             sendPasswordResetEmail,
             updatePassword,
             createUserWithEmailAndPassword
         } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
-        
+
         const firebaseConfig = {
             apiKey: "AIzaSyD6UTwGO8_Rg8gtiGYcWMIC8T4aT0riMHw",
             authDomain: "jojo-charm.firebaseapp.com",
@@ -56,14 +56,21 @@
             box-sizing: border-box;
             font-family: 'Cairo', "Segoe UI", Tahoma, sans-serif;
         }
-        html { scroll-behavior: smooth; }
-        body { background: #ffffff; color: #ffffff; }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #f0f7ff;
+            color: #1a1a2e;
+        }
 
         /* ===== شاشات الدخول ===== */
         #loginScreen {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.95);
+            background: rgba(0, 0, 0, 0.92);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -71,22 +78,34 @@
             backdrop-filter: blur(10px);
             transition: opacity 0.6s ease;
         }
-        #loginScreen.hidden { opacity: 0; pointer-events: none; }
+
+        #loginScreen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
 
         .login-box {
-            background: #0a0a0a;
+            background: #1a1a2e;
             padding: 50px 40px;
             border-radius: 30px;
             width: 100%;
             max-width: 480px;
             box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9);
             text-align: center;
-            border: 1px solid #2a2a2a;
+            border: 1px solid #74c0fe;
             animation: fadeInUp 0.6s ease;
         }
+
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(40px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .login-box .logo-img {
@@ -97,31 +116,50 @@
             border-radius: 50%;
             background: #fff;
             padding: 10px;
-            border: 3px solid #333;
+            border: 3px solid #74c0fe;
         }
-        .login-box h2 { font-size: 32px; margin-bottom: 8px; color: #fff; font-weight: 800; }
-        .login-box .subtitle { color: #888; margin-bottom: 25px; font-size: 15px; }
+
+        .login-box h2 {
+            font-size: 32px;
+            margin-bottom: 8px;
+            color: #fff;
+            font-weight: 800;
+        }
+
+        .login-box .subtitle {
+            color: #c0d7ea;
+            margin-bottom: 25px;
+            font-size: 15px;
+        }
+
         .login-box input {
             width: 100%;
             padding: 16px 22px;
             margin-bottom: 16px;
             border-radius: 30px;
-            border: 2px solid #2a2a2a;
-            background: #141414;
+            border: 2px solid #2a2a4a;
+            background: #141428;
             color: #fff;
             font-size: 16px;
             outline: none;
             transition: 0.3s;
             text-align: right;
         }
-        .login-box input:focus { border-color: #ffffff; background: #1a1a1a; }
-        .login-box input::placeholder { color: #555; }
+
+        .login-box input:focus {
+            border-color: #74c0fe;
+            background: #1a1a3a;
+        }
+
+        .login-box input::placeholder {
+            color: #555;
+        }
 
         .login-btn {
             width: 100%;
             padding: 16px;
-            background: #ffffff;
-            color: #000000;
+            background: #74c0fe;
+            color: #1a1a2e;
             border: none;
             border-radius: 30px;
             font-weight: bold;
@@ -130,8 +168,17 @@
             transition: 0.3s;
             margin-top: 10px;
         }
-        .login-btn:hover { background: #cccccc; transform: scale(1.02); }
-        .login-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+        .login-btn:hover {
+            background: #c0d7ea;
+            transform: scale(1.02);
+        }
+
+        .login-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
 
         .login-error {
             color: #ff6b6b;
@@ -143,7 +190,10 @@
             border-radius: 10px;
             border: 1px solid rgba(255, 0, 0, 0.2);
         }
-        .login-error.show { display: block; }
+
+        .login-error.show {
+            display: block;
+        }
 
         .login-success {
             color: #51cf66;
@@ -155,42 +205,85 @@
             border-radius: 10px;
             border: 1px solid rgba(81, 207, 102, 0.2);
         }
-        .login-success.show { display: block; }
 
-        .forgot-password-link { color: #888; font-size: 13px; margin-top: 12px; display: block; text-align: center; }
-        .forgot-password-link a { color: #aaa; text-decoration: none; transition: 0.3s; }
-        .forgot-password-link a:hover { color: #ffffff; text-decoration: underline; }
+        .login-success.show {
+            display: block;
+        }
 
-        .register-link { color: #888; font-size: 14px; margin-top: 15px; }
-        .register-link a { color: #ffffff; text-decoration: none; font-weight: bold; transition: 0.3s; }
-        .register-link a:hover { color: #cccccc; text-decoration: underline; }
+        .forgot-password-link {
+            color: #c0d7ea;
+            font-size: 13px;
+            margin-top: 12px;
+            display: block;
+            text-align: center;
+        }
+
+        .forgot-password-link a {
+            color: #74c0fe;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .forgot-password-link a:hover {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+
+        .register-link {
+            color: #c0d7ea;
+            font-size: 14px;
+            margin-top: 15px;
+        }
+
+        .register-link a {
+            color: #74c0fe;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .register-link a:hover {
+            color: #ffffff;
+            text-decoration: underline;
+        }
 
         /* ===== قسم تغيير كلمة المرور يدوياً ===== */
         .reset-manual-box {
-            background: #1a1a1a;
-            border: 1px solid #333;
+            background: #1a1a3a;
+            border: 1px solid #74c0fe;
             border-radius: 12px;
             padding: 20px;
             margin-top: 15px;
             text-align: right;
         }
-        .reset-manual-box h3 { color: #fff; font-size: 16px; margin-bottom: 15px; text-align: center; }
+
+        .reset-manual-box h3 {
+            color: #fff;
+            font-size: 16px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
         .reset-manual-box input {
             margin-bottom: 10px;
             padding: 14px 18px;
             border-radius: 25px;
-            border: 2px solid #2a2a2a;
-            background: #141414;
+            border: 2px solid #2a2a4a;
+            background: #141428;
             color: #fff;
             font-size: 15px;
             outline: none;
             text-align: right;
             width: 100%;
         }
-        .reset-manual-box input:focus { border-color: #ffffff; }
+
+        .reset-manual-box input:focus {
+            border-color: #74c0fe;
+        }
+
         .reset-manual-box .small-btn {
-            background: #ffa726;
-            color: #000;
+            background: #74c0fe;
+            color: #1a1a2e;
             border: none;
             padding: 14px;
             border-radius: 25px;
@@ -200,8 +293,17 @@
             font-size: 16px;
             transition: 0.3s;
         }
-        .reset-manual-box .small-btn:hover { background: #ffb74d; transform: scale(1.02); }
-        .reset-manual-box .small-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+        .reset-manual-box .small-btn:hover {
+            background: #c0d7ea;
+            transform: scale(1.02);
+        }
+
+        .reset-manual-box .small-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
 
         .reset-result {
             margin-top: 12px;
@@ -210,10 +312,27 @@
             border-radius: 10px;
             display: none;
         }
-        .reset-result.success { display: block; color: #51cf66; background: rgba(81, 207, 102, 0.1); border: 1px solid rgba(81, 207, 102, 0.2); }
-        .reset-result.error { display: block; color: #ff6b6b; background: rgba(255, 0, 0, 0.1); border: 1px solid rgba(255, 0, 0, 0.2); }
 
-        .divider { color: #444; margin: 15px 0; font-size: 13px; text-align: center; }
+        .reset-result.success {
+            display: block;
+            color: #51cf66;
+            background: rgba(81, 207, 102, 0.1);
+            border: 1px solid rgba(81, 207, 102, 0.2);
+        }
+
+        .reset-result.error {
+            display: block;
+            color: #ff6b6b;
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid rgba(255, 0, 0, 0.2);
+        }
+
+        .divider {
+            color: #444;
+            margin: 15px 0;
+            font-size: 13px;
+            text-align: center;
+        }
 
         /* ===== باقي التنسيقات ===== */
         header {
@@ -221,17 +340,34 @@
             top: 0;
             width: 100%;
             height: 75px;
-            background: #000000;
+            background: #1a1a2e;
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 0 40px;
-            box-shadow: 0 2px 12px rgba(255, 255, 255, 0.1);
+            box-shadow: 0 2px 12px rgba(116, 192, 254, 0.2);
             z-index: 1000;
         }
-        .logo { display: flex; align-items: center; gap: 10px; font-size: 30px; font-weight: bold; color: #ffffff; }
-        .logo img { height: 45px; width: auto; border-radius: 8px; }
-        .search-box { width: 50%; }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 30px;
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        .logo img {
+            height: 45px;
+            width: auto;
+            border-radius: 8px;
+        }
+
+        .search-box {
+            width: 50%;
+        }
+
         .search-box input {
             width: 100%;
             height: 46px;
@@ -242,13 +378,23 @@
             padding: 0 20px;
             font-size: 16px;
             transition: .3s;
+            color: #1a1a2e;
         }
-        .search-box input:focus { background: #f5f5f5; box-shadow: 0 0 0 3px #666; }
 
-        .header-buttons { display: flex; align-items: center; gap: 12px; }
+        .search-box input:focus {
+            background: #f0f7ff;
+            box-shadow: 0 0 0 3px #74c0fe;
+        }
+
+        .header-buttons {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
         .header-buttons button {
-            background: #ffffff;
-            color: #000000;
+            background: #74c0fe;
+            color: #1a1a2e;
             border: none;
             padding: 10px 18px;
             border-radius: 30px;
@@ -257,29 +403,50 @@
             transition: .3s;
             font-size: 14px;
         }
-        .header-buttons button:hover { background: #717171; transform: translateY(-2px); color: #fff; }
-        .header-buttons .logout-btn { background: #ff4444; color: #fff; }
-        .header-buttons .logout-btn:hover { background: #cc0000; }
-        .header-buttons .user-email {
+
+        .header-buttons button:hover {
+            background: #c0d7ea;
+            transform: translateY(-2px);
+        }
+
+        .header-buttons .logout-btn {
+            background: #ff4444;
             color: #fff;
+        }
+
+        .header-buttons .logout-btn:hover {
+            background: #cc0000;
+        }
+
+        .header-buttons .user-email {
+            color: #c0d7ea;
             font-size: 13px;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(116, 192, 254, 0.15);
             padding: 8px 16px;
             border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(116, 192, 254, 0.3);
         }
 
         .hero {
             width: 100%;
             height: 420px;
-            background: linear-gradient(135deg,  #e74dff, #db8cc7);
+            background: linear-gradient(135deg, #1a1a2e, #74c0fe, #c0d7ea);
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
         }
-        .hero h1 { font-size: 48px; margin-bottom: 20px; color: #ffffff; }
-        .hero p { font-size: 22px; color: #ffffff; }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+
+        .hero p {
+            font-size: 22px;
+            color: #ffffff;
+        }
 
         /* ===== أقسام المنتجات (4 أقسام) ===== */
         .categories-section {
@@ -287,37 +454,45 @@
             margin: 40px auto;
             padding: 0 20px;
         }
+
         .categories-section h2 {
-            color: #d63384;
+            color: #1a1a2e;
             font-size: 32px;
             text-align: center;
             margin-bottom: 30px;
         }
+
         .categories-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 20px;
         }
+
         .category-card {
-            background: #ffe4ec;
+            background: #ffffff;
             border-radius: 18px;
             overflow: hidden;
             cursor: pointer;
             transition: .3s;
-            box-shadow: 0 6px 18px rgba(255, 107, 157, 0.3);
+            box-shadow: 0 6px 18px rgba(116, 192, 254, 0.3);
             text-align: center;
+            border: 2px solid #c0d7ea;
         }
+
         .category-card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(255, 107, 157, 0.4);
+            box-shadow: 0 20px 40px rgba(116, 192, 254, 0.4);
+            border-color: #74c0fe;
         }
+
         .category-card img {
             width: 100%;
             height: 250px;
             object-fit: cover;
         }
+
         .category-card h3 {
-            color: #d63384;
+            color: #1a1a2e;
             padding: 15px;
             font-size: 20px;
         }
@@ -330,32 +505,70 @@
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 25px;
         }
+
         .product-card {
-            background: #ffe4ec;
+            background: #ffffff;
             border-radius: 18px;
             overflow: hidden;
             transition: .3s;
-            box-shadow: 0 6px 18px rgba(255, 107, 157, 0.3);
+            box-shadow: 0 6px 18px rgba(116, 192, 254, 0.3);
+            border: 1px solid #c0d7ea;
         }
-        .product-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(255, 107, 157, 0.4); }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(116, 192, 254, 0.4);
+            border-color: #74c0fe;
+        }
+
         .product-card img {
             width: 100%;
             height: 220px;
             object-fit: contain;
             background: #ffffff;
         }
-        .product-info { padding: 18px; }
-        .product-info h3 { font-size: 18px; margin-bottom: 10px; color: #000000; }
-        .price-container { display: flex; align-items: center; gap: 8px; margin-top: 4px; flex-wrap: wrap; }
-        .current-price { font-size: 18px; font-weight: bold; color: #d63384; }
-        .old-price { font-size: 14px; color: #999; text-decoration: line-through; }
-        .discount-badge { font-size: 12px; color: #28a745; font-weight: bold; }
+
+        .product-info {
+            padding: 18px;
+        }
+
+        .product-info h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #1a1a2e;
+        }
+
+        .price-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 4px;
+            flex-wrap: wrap;
+        }
+
+        .current-price {
+            font-size: 18px;
+            font-weight: bold;
+            color: #1a1a2e;
+        }
+
+        .old-price {
+            font-size: 14px;
+            color: #999;
+            text-decoration: line-through;
+        }
+
+        .discount-badge {
+            font-size: 12px;
+            color: #28a745;
+            font-weight: bold;
+        }
 
         .add-to-cart-btn {
             width: 100%;
-            background: #d63384;
+            background: #74c0fe;
             border: none;
-            color: #ffffff;
+            color: #1a1a2e;
             padding: 12px;
             border-radius: 12px;
             cursor: pointer;
@@ -363,13 +576,24 @@
             transition: .3s;
             margin-top: 10px;
         }
-        .add-to-cart-btn:hover { background: #c72e7a; transform: scale(1.02); }
 
-        .size-container { display: flex; gap: 6px; flex-wrap: wrap; margin: 10px 0 6px; justify-content: flex-start; }
+        .add-to-cart-btn:hover {
+            background: #c0d7ea;
+            transform: scale(1.02);
+        }
+
+        .size-container {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin: 10px 0 6px;
+            justify-content: flex-start;
+        }
+
         .size-btn {
-            background: #ffffff;
-            border: 2px solid #d63384;
-            color: #d63384;
+            background: #f0f7ff;
+            border: 2px solid #74c0fe;
+            color: #1a1a2e;
             padding: 5px 12px;
             border-radius: 30px;
             font-size: 13px;
@@ -379,15 +603,23 @@
             min-width: 44px;
             text-align: center;
         }
-        .size-btn:hover { background: #ffe4ec; }
-        .size-btn.selected { background: #d63384; color: #ffffff; border-color: #d63384; }
+
+        .size-btn:hover {
+            background: #c0d7ea;
+        }
+
+        .size-btn.selected {
+            background: #74c0fe;
+            color: #ffffff;
+            border-color: #74c0fe;
+        }
 
         .back-btn {
             display: inline-block;
             margin: 20px 40px;
             padding: 12px 30px;
-            background: #d63384;
-            color: #fff;
+            background: #74c0fe;
+            color: #1a1a2e;
             border: none;
             border-radius: 30px;
             cursor: pointer;
@@ -395,14 +627,18 @@
             font-weight: bold;
             transition: .3s;
         }
-        .back-btn:hover { background: #c72e7a; transform: scale(1.05); }
+
+        .back-btn:hover {
+            background: #c0d7ea;
+            transform: scale(1.05);
+        }
 
         .notification {
             position: fixed;
             bottom: 30px;
             right: 30px;
-            background: #ffffff;
-            color: #000000;
+            background: #1a1a2e;
+            color: #ffffff;
             padding: 18px 24px;
             border-radius: 12px;
             opacity: 0;
@@ -411,8 +647,13 @@
             z-index: 9999;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
             font-weight: 600;
+            border: 1px solid #74c0fe;
         }
-        .notification.show { opacity: 1; transform: translateY(0); }
+
+        .notification.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
         .overlay {
             position: fixed;
@@ -423,7 +664,11 @@
             transition: .3s;
             z-index: 999;
         }
-        .overlay.show { opacity: 1; visibility: visible; }
+
+        .overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
 
         .cart-sidebar {
             position: fixed;
@@ -439,17 +684,37 @@
             transition: .4s;
             z-index: 1000;
         }
-        .cart-sidebar.open { left: 0; }
+
+        .cart-sidebar.open {
+            left: 0;
+        }
+
         .cart-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 20px;
-            border-bottom: 1px solid #d63384;
+            border-bottom: 2px solid #74c0fe;
         }
-        .cart-header h2 { font-size: 22px; color: #d63384; }
-        .cart-header button { border: none; background: none; font-size: 26px; cursor: pointer; color: #d63384; }
-        #cartItems { flex: 1; overflow: auto; padding: 20px; }
+
+        .cart-header h2 {
+            font-size: 22px;
+            color: #1a1a2e;
+        }
+
+        .cart-header button {
+            border: none;
+            background: none;
+            font-size: 26px;
+            cursor: pointer;
+            color: #1a1a2e;
+        }
+
+        #cartItems {
+            flex: 1;
+            overflow: auto;
+            padding: 20px;
+        }
 
         .cart-item {
             display: flex;
@@ -459,6 +724,7 @@
             padding-bottom: 15px;
             align-items: center;
         }
+
         .cart-item img {
             width: 70px;
             height: 70px;
@@ -466,31 +732,70 @@
             border-radius: 10px;
             background: #f5f5f5;
         }
-        .cart-item-info { flex: 1; }
-        .cart-item-info h4 { font-size: 16px; margin-bottom: 4px; color: #000000; }
-        .cart-item-price { color: #d63384; font-weight: bold; }
-        .qty-box { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-info h4 {
+            font-size: 16px;
+            margin-bottom: 4px;
+            color: #1a1a2e;
+        }
+
+        .cart-item-price {
+            color: #1a1a2e;
+            font-weight: bold;
+        }
+
+        .qty-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
         .qty-box button {
             width: 28px;
             height: 28px;
             border: none;
-            background: #d63384;
+            background: #74c0fe;
             border-radius: 50%;
             cursor: pointer;
             font-weight: bold;
-            color: #fff;
+            color: #1a1a2e;
             font-size: 16px;
         }
-        .qty-box button:hover { background: #c72e7a; }
-        .qty-box span { color: #000000; font-weight: bold; font-size: 16px; }
-        .remove-item { color: red; cursor: pointer; font-size: 20px; background: none; border: none; padding: 0 5px; }
 
-        .cart-footer { border-top: 1px solid #e0e0e0; padding: 20px; }
+        .qty-box button:hover {
+            background: #c0d7ea;
+        }
+
+        .qty-box span {
+            color: #1a1a2e;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .remove-item {
+            color: red;
+            cursor: pointer;
+            font-size: 20px;
+            background: none;
+            border: none;
+            padding: 0 5px;
+        }
+
+        .cart-footer {
+            border-top: 1px solid #e0e0e0;
+            padding: 20px;
+        }
+
         .checkout-btn {
             width: 100%;
             border: none;
-            background: #d63384;
-            color: #ffffff;
+            background: #74c0fe;
+            color: #1a1a2e;
             padding: 14px;
             border-radius: 12px;
             cursor: pointer;
@@ -498,7 +803,11 @@
             margin-top: 15px;
             font-weight: bold;
         }
-        .checkout-btn:hover { background: #c72e7a; }
+
+        .checkout-btn:hover {
+            background: #c0d7ea;
+        }
+
         .clear-cart-btn {
             width: 100%;
             margin-top: 10px;
@@ -510,28 +819,49 @@
             cursor: pointer;
             font-weight: bold;
         }
-        .clear-cart-btn:hover { background: #b52b39; }
+
+        .clear-cart-btn:hover {
+            background: #b52b39;
+        }
 
         footer {
-            background: #ffffff;
-            color: #000000;
+            background: #1a1a2e;
+            color: #c0d7ea;
             padding: 50px 20px;
             margin-top: 60px;
-            border-top: 1px solid #e0e0e0;
+            border-top: 2px solid #74c0fe;
         }
-        footer p { text-align: center; margin-bottom: 20px; }
-        footer div { display: flex; justify-content: center; gap: 25px; flex-wrap: wrap; align-items: center; }
-        footer a { 
-            color: #000000; 
-            text-decoration: none; 
-            transition: .3s; 
-            display: inline-flex; 
-            align-items: center; 
+
+        footer p {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        footer div {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        footer a {
+            color: #c0d7ea;
+            text-decoration: none;
+            transition: .3s;
+            display: inline-flex;
+            align-items: center;
             gap: 6px;
             font-size: 15px;
         }
-        footer a:hover { color: #d63384; }
-        footer a img { vertical-align: middle; }
+
+        footer a:hover {
+            color: #74c0fe;
+        }
+
+        footer a img {
+            vertical-align: middle;
+        }
 
         .privacy-modal {
             position: fixed;
@@ -543,44 +873,90 @@
             z-index: 2000;
             backdrop-filter: blur(4px);
         }
-        .privacy-modal.open { display: flex; }
+
+        .privacy-modal.open {
+            display: flex;
+        }
+
         .privacy-modal-content {
             width: 90%;
             max-width: 500px;
             max-height: 90vh;
             overflow: auto;
-            background: #000000;
+            background: #1a1a2e;
             border-radius: 20px;
-            border: 1px solid #333;
+            border: 2px solid #74c0fe;
         }
+
         .privacy-modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: #1a1a1a;
+            background: #1a1a3a;
             padding: 20px;
             border-radius: 20px 20px 0 0;
         }
-        .privacy-modal-header h2 { color: #fff; }
-        .privacy-modal-header button { background: none; border: none; font-size: 28px; cursor: pointer; color: #fff; }
-        .privacy-modal-body { padding: 25px; line-height: 2; color: #ccc; }
-        .privacy-modal-body h3 { color: #fff; margin-bottom: 10px; }
 
-        .checkout-box { margin-top: 15px; display: flex; flex-direction: column; gap: 15px; width: 100%; }
-        .checkout-box label { font-weight: bold; font-size: 15px; color: #ddd; }
+        .privacy-modal-header h2 {
+            color: #fff;
+        }
+
+        .privacy-modal-header button {
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: #fff;
+        }
+
+        .privacy-modal-body {
+            padding: 25px;
+            line-height: 2;
+            color: #c0d7ea;
+        }
+
+        .privacy-modal-body h3 {
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .checkout-box {
+            margin-top: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+        }
+
+        .checkout-box label {
+            font-weight: bold;
+            font-size: 15px;
+            color: #c0d7ea;
+        }
+
         .checkout-box input {
             padding: 12px 16px;
             border: 1px solid #333;
             border-radius: 12px;
-            background: #141414;
+            background: #141428;
             color: #ffffff;
             font-size: 16px;
             width: 100%;
             outline: none;
         }
-        .checkout-box input:focus { border-color: #d63384; }
-        .checkout-box input::placeholder { color: #666; }
-        .checkout-box input:read-only { background: #1a1a1a; cursor: default; }
+
+        .checkout-box input:focus {
+            border-color: #74c0fe;
+        }
+
+        .checkout-box input::placeholder {
+            color: #666;
+        }
+
+        .checkout-box input:read-only {
+            background: #1a1a3a;
+            cursor: default;
+        }
 
         .location-btn-group {
             display: flex;
@@ -589,7 +965,12 @@
             flex-wrap: wrap;
             width: 100%;
         }
-        .location-btn-group input { flex: 1; min-width: 150px; }
+
+        .location-btn-group input {
+            flex: 1;
+            min-width: 150px;
+        }
+
         .location-btn {
             padding: 12px 18px;
             border: none;
@@ -599,14 +980,35 @@
             font-size: 14px;
             transition: 0.3s;
             white-space: nowrap;
-            color: #fff;
+            color: #1a1a2e;
         }
-        .location-btn:hover { transform: scale(1.05); }
-        .location-btn.gps { background: #4CAF50; }
-        .location-btn.gps:hover { background: #45a049; }
-        .location-btn.map { background: #2196F3; }
-        .location-btn.map:hover { background: #0b7dda; }
-        .location-hint { color: #888; font-size: 12px; display: block; margin-top: 5px; }
+
+        .location-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .location-btn.gps {
+            background: #74c0fe;
+        }
+
+        .location-btn.gps:hover {
+            background: #c0d7ea;
+        }
+
+        .location-btn.map {
+            background: #74c0fe;
+        }
+
+        .location-btn.map:hover {
+            background: #c0d7ea;
+        }
+
+        .location-hint {
+            color: #888;
+            font-size: 12px;
+            display: block;
+            margin-top: 5px;
+        }
 
         .image-360-container {
             width: 100%;
@@ -619,7 +1021,11 @@
             position: relative;
             cursor: grab;
         }
-        .image-360-container:active { cursor: grabbing; }
+
+        .image-360-container:active {
+            cursor: grabbing;
+        }
+
         .image-360-container img {
             width: 100%;
             height: 100%;
@@ -630,28 +1036,104 @@
         }
 
         @media(max-width:768px) {
-            header { flex-direction: column; height: auto; padding: 15px; gap: 15px; }
-            .search-box { width: 100%; }
-            .hero { height: 280px; padding: 20px; }
-            .hero h1 { font-size: 32px; }
-            .hero p { font-size: 18px; }
-            .categories-grid { grid-template-columns: repeat(2, 1fr); }
-            #productsContainer { padding: 20px; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
-            .cart-sidebar { width: 100%; left: -100%; }
-            footer div { flex-direction: column; align-items: center; }
-            .image-360-container { height: 200px; }
-            .size-btn { min-width: 38px; font-size: 11px; padding: 4px 8px; }
-            .login-box { padding: 30px 20px; margin: 20px; }
-            .header-buttons button { padding: 8px 14px; font-size: 13px; }
-            .header-buttons .user-email { font-size: 11px; padding: 5px 10px; }
-            .location-btn-group { flex-direction: column; }
-            .location-btn-group input { min-width: 100%; }
-            .location-btn { width: 100%; text-align: center; }
+            header {
+                flex-direction: column;
+                height: auto;
+                padding: 15px;
+                gap: 15px;
+            }
+
+            .search-box {
+                width: 100%;
+            }
+
+            .hero {
+                height: 280px;
+                padding: 20px;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .hero p {
+                font-size: 18px;
+            }
+
+            .categories-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            #productsContainer {
+                padding: 20px;
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            }
+
+            .cart-sidebar {
+                width: 100%;
+                left: -100%;
+            }
+
+            footer div {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .image-360-container {
+                height: 200px;
+            }
+
+            .size-btn {
+                min-width: 38px;
+                font-size: 11px;
+                padding: 4px 8px;
+            }
+
+            .login-box {
+                padding: 30px 20px;
+                margin: 20px;
+            }
+
+            .header-buttons button {
+                padding: 8px 14px;
+                font-size: 13px;
+            }
+
+            .header-buttons .user-email {
+                font-size: 11px;
+                padding: 5px 10px;
+            }
+
+            .location-btn-group {
+                flex-direction: column;
+            }
+
+            .location-btn-group input {
+                min-width: 100%;
+            }
+
+            .location-btn {
+                width: 100%;
+                text-align: center;
+            }
         }
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #1a1a1a; }
-        ::-webkit-scrollbar-thumb { background: #d63384; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #c72e7a; }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1a1a2e;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #74c0fe;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #c0d7ea;
+        }
     </style>
 </head>
 
@@ -668,7 +1150,7 @@
             <input type="password" id="loginPassword" placeholder="🔑 كلمة المرور">
 
             <button class="login-btn" id="loginBtn">دخول 🚀</button>
-            
+
             <div id="loginError" class="login-error">⚠️ البريد الإلكتروني أو كلمة المرور غير صحيحة</div>
             <div id="loginSuccess" class="login-success">✅ تم تسجيل الدخول بنجاح!</div>
 
@@ -683,7 +1165,8 @@
     </div>
 
     <!-- ===== شاشة التسجيل ===== -->
-    <div id="registerScreen" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 99998; backdrop-filter: blur(10px); justify-content: center; align-items: center;">
+    <div id="registerScreen"
+        style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 99998; backdrop-filter: blur(10px); justify-content: center; align-items: center;">
         <div class="login-box">
             <img src="https://i.top4top.io/p_3854kn46f0.jpg" alt="JoJo Logo" class="logo-img">
             <h2>📝 إنشاء حساب</h2>
@@ -694,7 +1177,7 @@
             <input type="password" id="registerConfirmPassword" placeholder="🔑 تأكيد كلمة المرور">
 
             <button class="login-btn" id="registerBtn">إنشاء حساب ✨</button>
-            
+
             <div id="registerError" class="login-error"></div>
             <div id="registerSuccess" class="login-success"></div>
 
@@ -703,9 +1186,9 @@
             </div>
         </div>
     </div>
-
     <!-- ===== شاشة إعادة تعيين كلمة المرور ===== -->
-    <div id="resetPasswordScreen" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 99998; backdrop-filter: blur(10px); justify-content: center; align-items: center;">
+    <div id="resetPasswordScreen"
+        style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 99998; backdrop-filter: blur(10px); justify-content: center; align-items: center;">
         <div class="login-box">
             <img src="https://i.top4top.io/p_3854kn46f0.jpg" alt="JoJo Logo" class="logo-img">
             <h2>🔑 إعادة تعيين كلمة المرور</h2>
@@ -723,7 +1206,8 @@
             <div class="reset-manual-box">
                 <h3>🔧 تغيير كلمة المرور يدوياً</h3>
                 <p style="color:#888; font-size:13px; text-align:center; margin-bottom:12px;">
-                    📧 سيتم إرسال كلمة المرور الجديدة إلى بريدك من <strong style="color:#ffa726;">jojocharm10@gmail.com</strong>
+                    📧 سيتم إرسال كلمة المرور الجديدة إلى بريدك من <strong
+                        style="color:#74c0fe;">jojocharm10@gmail.com</strong>
                 </p>
                 <input type="email" id="manualEmail" placeholder="✉️ البريد الإلكتروني">
                 <input type="password" id="manualOldPassword" placeholder="🔑 كلمة المرور الحالية">
@@ -763,14 +1247,13 @@
 
         <section class="hero">
             <div class="hero-text">
-                <h1>أهلاً بك في JoJo Charm</h1>
+                <h1> أهلاً بك في JoJo Charm</h1>
                 <p>أفضل العروض والمنتجات بأفضل الأسعار.</p>
             </div>
         </section>
 
         <!-- ===== أقسام المنتجات (4 أقسام) ===== -->
         <section class="categories-section" id="categoriesSection">
-        
             <div class="categories-grid" id="categoriesGrid">
                 <!-- القسم 1 -->
                 <div class="category-card" onclick="filterByCategory('ملابس')">
@@ -790,7 +1273,7 @@
                 <!-- القسم 4 -->
                 <div class="category-card" onclick="filterByCategory('عطور')">
                     <img src="https://images.unsplash.com/photo-1594035910387-fea47794261f?w=400" alt="عطور">
-                    <h3>💄 Makeup </h3>
+                    <h3>💄 Makeup</h3>
                 </div>
             </div>
         </section>
@@ -809,11 +1292,12 @@
                 <button onclick="toggleCart()">✕</button>
             </div>
             <div id="cartItems">
-                <p class="empty-cart-msg" style="text-align:center; padding:30px; color:#888;">لا توجد منتجات في العربة</p>
+                <p class="empty-cart-msg" style="text-align:center; padding:30px; color:#888;">لا توجد منتجات في العربة
+                </p>
             </div>
             <div class="cart-footer">
-                <h3 style="color:#000;">الإجمالي</h3>
-                <h2 id="cartAviro" style="color:#d63384;">0 ج.م</h2>
+                <h3 style="color:#1a1a2e;">الإجمالي</h3>
+                <h2 id="cartAviro" style="color:#1a1a2e;">0 ج.م</h2>
                 <button class="checkout-btn" onclick="checkout()">إتمام الشراء</button>
                 <button class="clear-cart-btn" onclick="clearCart()">تفريغ العربة</button>
             </div>
@@ -829,10 +1313,11 @@
                 </div>
                 <div class="privacy-modal-body">
                     <h3>سياسة الخصوصية</h3>
-                    <p>يلتزم متجر JoJo Charm بحماية بيانات جميع المستخدمين، وعدم مشاركة البيانات مع أي جهة إلا بما يسمح به القانون.</p>
+                    <p>يلتزم متجر JoJo Charm بحماية بيانات جميع المستخدمين، وعدم مشاركة البيانات مع أي جهة إلا بما يسمح
+                        به القانون.</p>
                     <p>جميع بيانات الدفع يتم تشفيرها باستخدام تقنيات آمنة.</p>
                     <p>يمكنك طلب حذف بياناتك في أي وقت عبر التواصل معنا.</p>
-                    <p>البريد الإلكتروني: <strong style="color:#fff;">jojocharm10@gmail.com</strong></p>
+                    <p>البريد الإلكتروني: <strong style="color:#74c0fe;">jojocharm10@gmail.com</strong></p>
                 </div>
             </div>
         </div>
@@ -850,7 +1335,8 @@
                         <input type="text" id="clientName" placeholder="اكتب اسمك الثلاثي...">
 
                         <label for="clientEmail">✉️ البريد الإلكتروني (سيصلك التأكيد عليه):</label>
-                        <input type="email" id="clientEmail" value="jojocharm10@gmail.com" readonly style="background: #1a1a1a; cursor: default; opacity: 0.8;">
+                        <input type="email" id="clientEmail" value="jojocharm10@gmail.com" readonly
+                            style="background: #1a1a3a; cursor: default; opacity: 0.8;">
 
                         <label for="clientLocation">📍 الموقع:</label>
                         <div class="location-btn-group">
@@ -858,7 +1344,8 @@
                             <button class="location-btn gps" onclick="getLocation()">📍 اختيار تلقائي</button>
                             <button class="location-btn map" onclick="openMapPicker()">🗺️ اختيار يدوي</button>
                         </div>
-                        <small class="location-hint">📍 اختر تلقائياً (جلب الموقع الحالي) أو افتح الخريطة وانسخ العنوان</small>
+                        <small class="location-hint">📍 اختر تلقائياً (جلب الموقع الحالي) أو افتح الخريطة وانسخ
+                            العنوان</small>
 
                         <label for="clientPhone">📱 رقم الهاتف:</label>
                         <input type="text" id="clientPhone" placeholder="مثال: 01012345678">
@@ -871,41 +1358,44 @@
             </div>
         </div>
 
-      <!-- ===== روابط التواصل الاجتماعي في الفوتر ===== -->
-<footer>
-    <p>© 2026 JoJo Charm. جميع الحقوق محفوظة</p>
-    <div>
-        <a href="#" onclick="showPrivacyPolicy(event)">🌐 سياسة الخصوصية</a>
-        <a href="mailto:jojocharm10@gmail.com">
-            <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="إيميل" width="20" height="20"> البريد الإلكتروني
-        </a>
-        <a href="https://www.facebook.com/share/1EkWv3TqJG/" target="_blank">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="فيسبوك" width="20" height="20"> فيسبوك
-        </a>
-        <a href="https://www.instagram.com/jojocharm10" target="_blank">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="انستجرام" width="20" height="20"> انستجرام
-        </a>
-        <a href="https://wa.me/201110580579" target="_blank">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="واتساب" width="20" height="20"> واتساب
-        </a>
-    </div>
-</footer>
+        <footer>
+            <p>© 2026 JoJo Charm. جميع الحقوق محفوظة</p>
+            <div>
+                <a href="#" onclick="showPrivacyPolicy(event)">🌐 سياسة الخصوصية</a>
+                <a href="mailto:jojocharm10@gmail.com">
+                    <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="إيميل" width="20" height="20">
+                    البريد الإلكتروني
+                </a>
+                <a href="https://www.facebook.com/share/1EkWv3TqJG/" target="_blank">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg"
+                        alt="فيسبوك" width="20" height="20"> فيسبوك
+                </a>
+                <a href="https://www.instagram.com/jojocharm10" target="_blank">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="انستجرام"
+                        width="20" height="20"> انستجرام
+                </a>
+                <a href="https://wa.me/201110580579" target="_blank">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="واتساب" width="20"
+                        height="20"> واتساب
+                </a>
+            </div>
+        </footer>
     </div>
 
     <script type="module">
         // ===== استيراد Firebase =====
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
-        import { 
-            getAuth, 
-            signInWithEmailAndPassword, 
+        import {
+            getAuth,
+            signInWithEmailAndPassword,
             createUserWithEmailAndPassword,
-            onAuthStateChanged, 
+            onAuthStateChanged,
             signOut,
             sendPasswordResetEmail,
             updatePassword
         } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
 
-    
+
 
         // ===== المتغيرات =====
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -1033,7 +1523,7 @@
         const EMAILJS_TEMPLATE_ID = "template_sxevq7j";
         const STORE_EMAIL = "jojocharm10@gmail.com";
 
-        (function() {
+        (function () {
             try {
                 emailjs.init({
                     publicKey: EMAILJS_PUBLIC_KEY,
@@ -1071,7 +1561,7 @@
         }
 
         // ===== دوال المصادقة =====
-        window.handleLogin = async function() {
+        window.handleLogin = async function () {
             const email = document.getElementById('loginEmail').value.trim();
             const password = document.getElementById('loginPassword').value.trim();
             const errorEl = document.getElementById('loginError');
@@ -1111,7 +1601,7 @@
             }
         };
 
-        window.handleRegister = async function() {
+        window.handleRegister = async function () {
             const email = document.getElementById('registerEmail').value.trim();
             const password = document.getElementById('registerPassword').value.trim();
             const confirmPassword = document.getElementById('registerConfirmPassword').value.trim();
@@ -1164,7 +1654,7 @@
             }
         };
 
-        window.handleResetPassword = async function() {
+        window.handleResetPassword = async function () {
             const email = document.getElementById('resetEmail').value.trim();
             const errorEl = document.getElementById('resetError');
             const successEl = document.getElementById('resetSuccess');
@@ -1205,7 +1695,7 @@
             }
         };
 
-        window.handleManualReset = async function() {
+        window.handleManualReset = async function () {
             const email = document.getElementById('manualEmail').value.trim();
             const oldPassword = document.getElementById('manualOldPassword').value.trim();
             const newPassword = document.getElementById('manualNewPassword').value.trim();
@@ -1241,18 +1731,18 @@
                 const userCredential = await signInWithEmailAndPassword(auth, email, oldPassword);
                 const user = userCredential.user;
                 await updatePassword(user, newPassword);
-                
+
                 const message = `تم تغيير كلمة المرور الخاصة بحسابك في متجر JoJo Charm بنجاح.\n\nكلمة المرور الجديدة: ${newPassword}\n\nيرجى حفظها في مكان آمن.`;
                 await sendEmail(email, "عميل JoJo", message, "✅ تم تغيير كلمة المرور");
 
                 resultDiv.className = 'reset-result success';
                 resultDiv.innerHTML = `
                     ✅ تم تغيير كلمة المرور بنجاح!<br>
-                    📧 تم إرسال كلمة المرور الجديدة إلى بريدك من <strong style="color:#ffa726;">jojocharm10@gmail.com</strong>
+                    📧 تم إرسال كلمة المرور الجديدة إلى بريدك من <strong style="color:#74c0fe;">jojocharm10@gmail.com</strong>
                 `;
-                
+
                 showNotification('✅ تم تغيير كلمة المرور بنجاح!');
-                
+
                 setTimeout(() => {
                     showLogin();
                     document.getElementById('manualEmail').value = '';
@@ -1285,7 +1775,7 @@
             }
         };
 
-        window.handleLogout = async function() {
+        window.handleLogout = async function () {
             if (confirm('هل تريد تسجيل الخروج؟')) {
                 try {
                     await signOut(auth);
@@ -1333,7 +1823,7 @@
         });
 
         // ===== وظائف تبديل الشاشات =====
-        window.showRegister = function() {
+        window.showRegister = function () {
             document.getElementById('loginScreen').style.display = 'none';
             document.getElementById('registerScreen').style.display = 'flex';
             document.getElementById('resetPasswordScreen').style.display = 'none';
@@ -1341,7 +1831,7 @@
             document.getElementById('registerSuccess').classList.remove('show');
         };
 
-        window.showLogin = function() {
+        window.showLogin = function () {
             document.getElementById('registerScreen').style.display = 'none';
             document.getElementById('resetPasswordScreen').style.display = 'none';
             document.getElementById('loginScreen').style.display = 'flex';
@@ -1354,7 +1844,7 @@
             }
         };
 
-        window.showResetPassword = function() {
+        window.showResetPassword = function () {
             document.getElementById('loginScreen').style.display = 'none';
             document.getElementById('registerScreen').style.display = 'none';
             document.getElementById('resetPasswordScreen').style.display = 'flex';
@@ -1375,40 +1865,40 @@
         };
 
         // ===== ربط الأحداث =====
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('loginBtn')?.addEventListener('click', window.handleLogin);
             document.getElementById('registerBtn')?.addEventListener('click', window.handleRegister);
             document.getElementById('resetPasswordBtn')?.addEventListener('click', window.handleResetPassword);
             document.getElementById('manualResetBtn')?.addEventListener('click', window.handleManualReset);
 
-            document.getElementById('loginEmail')?.addEventListener('keyup', function(e) {
+            document.getElementById('loginEmail')?.addEventListener('keyup', function (e) {
                 if (e.key === 'Enter') window.handleLogin();
             });
-            document.getElementById('loginPassword')?.addEventListener('keyup', function(e) {
+            document.getElementById('loginPassword')?.addEventListener('keyup', function (e) {
                 if (e.key === 'Enter') window.handleLogin();
             });
-            document.getElementById('registerEmail')?.addEventListener('keyup', function(e) {
+            document.getElementById('registerEmail')?.addEventListener('keyup', function (e) {
                 if (e.key === 'Enter') window.handleRegister();
             });
-            document.getElementById('registerPassword')?.addEventListener('keyup', function(e) {
+            document.getElementById('registerPassword')?.addEventListener('keyup', function (e) {
                 if (e.key === 'Enter') window.handleRegister();
             });
-            document.getElementById('registerConfirmPassword')?.addEventListener('keyup', function(e) {
+            document.getElementById('registerConfirmPassword')?.addEventListener('keyup', function (e) {
                 if (e.key === 'Enter') window.handleRegister();
             });
-            document.getElementById('resetEmail')?.addEventListener('keyup', function(e) {
+            document.getElementById('resetEmail')?.addEventListener('keyup', function (e) {
                 if (e.key === 'Enter') window.handleResetPassword();
             });
-            document.getElementById('manualEmail')?.addEventListener('keyup', function(e) {
+            document.getElementById('manualEmail')?.addEventListener('keyup', function (e) {
                 if (e.key === 'Enter') window.handleManualReset();
             });
-            document.getElementById('manualOldPassword')?.addEventListener('keyup', function(e) {
+            document.getElementById('manualOldPassword')?.addEventListener('keyup', function (e) {
                 if (e.key === 'Enter') window.handleManualReset();
             });
-            document.getElementById('manualNewPassword')?.addEventListener('keyup', function(e) {
+            document.getElementById('manualNewPassword')?.addEventListener('keyup', function (e) {
                 if (e.key === 'Enter') window.handleManualReset();
             });
-            document.getElementById('manualConfirmPassword')?.addEventListener('keyup', function(e) {
+            document.getElementById('manualConfirmPassword')?.addEventListener('keyup', function (e) {
                 if (e.key === 'Enter') window.handleManualReset();
             });
 
@@ -1418,7 +1908,7 @@
         });
 
         // ===== دوال الموقع =====
-        window.getLocation = function() {
+        window.getLocation = function () {
             if (!navigator.geolocation) {
                 alert("⚠️ المتصفح لا يدعم خاصية تحديد الموقع!");
                 return;
@@ -1428,10 +1918,10 @@
             locationInput.value = '⏳ جاري جلب الموقع...';
 
             navigator.geolocation.getCurrentPosition(
-                function(position) {
+                function (position) {
                     const lat = position.coords.latitude;
                     const lng = position.coords.longitude;
-                    
+
                     fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`)
                         .then(response => response.json())
                         .then(data => {
@@ -1444,12 +1934,12 @@
                             showNotification('✅ تم تحديد الموقع (الإحداثيات)');
                         });
                 },
-                function(error) {
+                function (error) {
                     let errorMessage = '⚠️ فشل في جلب الموقع';
                     if (error.code === 1) errorMessage = '⚠️ المستخدم رفض مشاركة الموقع';
                     else if (error.code === 2) errorMessage = '⚠️ الموقع غير متوفر حالياً';
                     else if (error.code === 3) errorMessage = '⚠️ انتهت مهلة جلب الموقع';
-                    
+
                     locationInput.value = '';
                     alert(errorMessage + '\nيمكنك كتابة العنوان يدوياً.');
                 },
@@ -1461,7 +1951,7 @@
             );
         };
 
-        window.openMapPicker = function() {
+        window.openMapPicker = function () {
             window.open('https://www.google.com/maps', '_blank');
             showNotification('🗺️ اختر موقعك على الخريطة ثم انسخ العنوان والصقه في الحقل');
             const locationInput = document.getElementById('clientLocation');
@@ -1471,29 +1961,27 @@
         };
 
         // ===== دوال المنتجات =====
-        window.filterByCategory = function(category) {
+        window.filterByCategory = function (category) {
             currentCategory = category;
             const filtered = productsData.filter(p => p.category === category);
             displayProducts(filtered);
             document.getElementById('categoriesSection').style.display = 'none';
             document.getElementById('backButtonContainer').style.display = 'block';
-            // إخفاء زر العودة إذا كان البحث لا يظهر نتائج
             if (filtered.length === 0) {
                 document.getElementById('backButtonContainer').style.display = 'none';
             }
         };
 
-        window.showAllProducts = function() {
+        window.showAllProducts = function () {
             currentCategory = 'الكل';
             displayProducts([]);
             document.getElementById('categoriesSection').style.display = 'block';
             document.getElementById('backButtonContainer').style.display = 'none';
-            // إعادة تعيين البحث
             document.getElementById('searchInput').value = '';
         };
 
         // ===== إرسال الطلب =====
-        window.sendOrderToWhatsApp = function() {
+        window.sendOrderToWhatsApp = function () {
             const name = document.getElementById('clientName').value.trim();
             const email = document.getElementById('clientEmail').value.trim();
             const location = document.getElementById('clientLocation').value.trim();
@@ -1554,7 +2042,6 @@
             if (productsToDisplay.length === 0) {
                 container.innerHTML = `
                     <div style="grid-column:1/-1; text-align:center; padding:60px 20px; color:#888;">
-                        
                     </div>
                 `;
                 return;
@@ -1622,7 +2109,7 @@
             });
         }
 
-        window.selectSize = function(productId, size) {
+        window.selectSize = function (productId, size) {
             selectedSizes[productId] = size;
             const container = document.getElementById(`sizeContainer-${productId}`);
             if (container) {
@@ -1635,14 +2122,18 @@
             if (product) showNotification(`✅ تم اختيار المقاس ${size} لمنتج "${product.name}"`);
         };
 
-        window.startDrag = function(e, id) { isDragging = true;
+        window.startDrag = function (e, id) {
+            isDragging = true;
             dragStartX = e.clientX;
-            stopAutoRotate(id); };
-        window.startDragTouch = function(e, id) { const touch = e.touches[0];
+            stopAutoRotate(id);
+        };
+        window.startDragTouch = function (e, id) {
+            const touch = e.touches[0];
             isDragging = true;
             dragStartX = touch.clientX;
-            stopAutoRotate(id); };
-        window.dragRotate = function(e, id) {
+            stopAutoRotate(id);
+        };
+        window.dragRotate = function (e, id) {
             if (!isDragging) return;
             const product = productsData.find(p => p.id === id);
             if (!product || !product.images360) return;
@@ -1657,7 +2148,7 @@
                 dragStartX = e.clientX;
             }
         };
-        window.dragRotateTouch = function(e, id) {
+        window.dragRotateTouch = function (e, id) {
             if (!isDragging) return;
             const touch = e.touches[0];
             const product = productsData.find(p => p.id === id);
@@ -1673,7 +2164,7 @@
                 dragStartX = touch.clientX;
             }
         };
-        window.endDrag = function() { isDragging = false; };
+        window.endDrag = function () { isDragging = false; };
 
         function startAutoRotate(id) {
             const product = productsData.find(p => p.id === id);
@@ -1692,16 +2183,15 @@
 
         function stopAutoRotate(id) { clearInterval(autoRotateIntervals[id]); }
 
-        window.searchProducts = function() {
+        window.searchProducts = function () {
             const searchInput = document.getElementById('searchInput').value.trim().toLowerCase();
             if (!searchInput) {
-                // إذا كان البحث فارغاً، نظهر الأقسام
                 document.getElementById('categoriesSection').style.display = 'block';
                 document.getElementById('backButtonContainer').style.display = 'none';
                 displayProducts([]);
                 return;
             }
-            
+
             let filtered = productsData.filter(p => p.name.toLowerCase().includes(searchInput));
             displayProducts(filtered);
             document.getElementById('categoriesSection').style.display = 'none';
@@ -1712,7 +2202,7 @@
             }
         };
 
-        window.toggleCart = function() {
+        window.toggleCart = function () {
             const sidebar = document.getElementById('cartSidebar');
             const overlay = document.getElementById('overlay');
             if (!sidebar) return;
@@ -1721,7 +2211,7 @@
             if (sidebar.classList.contains('open')) renderCart();
         };
 
-        window.addToCart = function(id) {
+        window.addToCart = function (id) {
             const product = productsData.find(p => p.id === id);
             if (!product) return;
             const selectedSize = selectedSizes[id];
@@ -1733,7 +2223,8 @@
             if (existingIndex !== -1) {
                 cart[existingIndex].quantity++;
             } else {
-                cart.push({ ...product,
+                cart.push({
+                    ...product,
                     quantity: 1,
                     selectedSize: selectedSize || 'غير محدد'
                 });
@@ -1770,7 +2261,7 @@
                         <div class="cart-item-info">
                             <h4>${item.name}</h4>
                             <p class="cart-item-price">${item.price} ج.م</p>
-                            <p style="color:#000; font-size:14px; margin:2px 0;">المقاس: ${item.selectedSize || 'غير محدد'}</p>
+                            <p style="color:#1a1a2e; font-size:14px; margin:2px 0;">المقاس: ${item.selectedSize || 'غير محدد'}</p>
                             <div class="qty-box">
                                 <button onclick="changeQuantity(${item.id}, -1, '${item.selectedSize}')">-</button>
                                 <span>${item.quantity}</span>
@@ -1784,7 +2275,7 @@
             if (cartAviro) cartAviro.innerText = total + " ج.م";
         }
 
-        window.changeQuantity = function(id, change, size) {
+        window.changeQuantity = function (id, change, size) {
             const index = cart.findIndex(item => item.id === id && item.selectedSize === size);
             if (index === -1) return;
             cart[index].quantity += change;
@@ -1794,14 +2285,14 @@
             renderCart();
         };
 
-        window.removeFromCart = function(id, size) {
+        window.removeFromCart = function (id, size) {
             cart = cart.filter(item => !(item.id === id && item.selectedSize === size));
             localStorage.setItem("cart", JSON.stringify(cart));
             updateCartIconCount();
             renderCart();
         };
 
-        window.clearCart = function() {
+        window.clearCart = function () {
             if (confirm("هل أنت متأكد من تفريغ العربة بالكامل؟")) {
                 cart = [];
                 localStorage.setItem("cart", JSON.stringify(cart));
@@ -1811,7 +2302,7 @@
             }
         };
 
-        window.checkout = function() {
+        window.checkout = function () {
             if (cart.length === 0) {
                 showNotification("⚠️ عربتك فارغة!");
                 return;
@@ -1820,7 +2311,7 @@
             document.getElementById('checkoutModal').classList.add('open');
         };
 
-        window.closeCheckoutModal = function() {
+        window.closeCheckoutModal = function () {
             document.getElementById('checkoutModal').classList.remove('open');
         };
 
@@ -1832,12 +2323,12 @@
             setTimeout(() => notif.classList.remove('show'), 3000);
         }
 
-        window.showPrivacyPolicy = function(e) {
+        window.showPrivacyPolicy = function (e) {
             e.preventDefault();
             document.getElementById('privacyModal').classList.add('open');
         };
 
-        window.closePrivacyPolicy = function() {
+        window.closePrivacyPolicy = function () {
             document.getElementById('privacyModal').classList.remove('open');
         };
 
